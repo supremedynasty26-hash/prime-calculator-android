@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Scientific expression evaluation and worked steps",
+    "sanity": true,
+    "viewport": "mobile",
+    "covers": [
+      "scientific function evaluator",
+      "square and cube roots",
+      "logarithms",
+      "powers",
+      "factorial",
+      "scientific notation",
+      "operator precedence including unary minus",
+      "calculation steps",
+      "saved calculation history"
+    ],
+    "description": "Evaluates scientific and mixed expressions, checks conventional unary-minus exponent precedence, then saves and reopens worked calculations.",
+    "steps": [
+      "Enter sqrt(225)+sin(30)+log10(1000) in DEG mode and calculate",
+      "Confirm the result is 18.5 and scientific steps appear",
+      "Calculate -2^2 and confirm it returns -4",
+      "Calculate (-2)^2 and confirm it returns 4",
+      "Calculate 2^3+5!+1e2 and confirm it returns 228",
+      "Calculate ln(e^2) and confirm it is approximately 2",
+      "Calculate log(100) and log10(100) and confirm both return 2",
+      "Calculate sin(30+30) in DEG mode and confirm it is approximately 0.8660254",
+      "Save a calculation, open Calculation History, reopen the entry, and refresh the app"
+    ],
+    "expected": "Scientific functions and powers return their expected results; -2^2 is -4 while (-2)^2 is 4; a saved calculation and its worked steps remain available after refresh."
+  },
+  {
+    "name": "Angle mode changes trigonometric results correctly",
+    "viewport": "mobile",
+    "covers": [
+      "DEG RAD GRAD selection",
+      "angle-aware trig functions",
+      "inverse trigonometric functions"
+    ],
+    "description": "Checks trigonometric functions respect the selected angle mode and inverse functions return values in that mode.",
+    "steps": [
+      "Set DEG and calculate sin(30)",
+      "Set RAD and calculate sin(30)",
+      "Set GRAD and calculate sin(50)",
+      "Calculate asin(0.5) in DEG mode"
+    ],
+    "expected": "sin(30) is 0.5 in DEG, sin(30) is approximately -0.988031624 in RAD, sin(50) is approximately 0.707106781 in GRAD, and asin(0.5) returns 30 in DEG."
+  },
+  {
+    "name": "Scientific Functions card, drag behavior, symbols, and insertion",
+    "viewport": "mobile",
+    "covers": [
+      "scientific functions floating card",
+      "drag repositioning",
+      "function and symbol insertion",
+      "auto-close after selection",
+      "mobile usability",
+      "very narrow phone keypad fit",
+      "small-screen horizontal overflow prevention"
+    ],
+    "description": "Verifies the floating scientific palette opens, supports drag interaction, and inserts grouped functions and requested symbols.",
+    "steps": [
+      "Tap Scientific to open the palette",
+      "Drag its header to another visible location",
+      "Choose sin and enter 30) to complete sin(30)",
+      "Reopen the palette and check Grouping & Symbols contains (, ), {, }, /, backslash, and #",
+      "Select a symbol and confirm it is inserted into the expression and the palette closes"
+    ],
+    "expected": "The palette opens and closes correctly, drag repositioning works, scientific functions and all seven requested symbols are available, selected tokens are inserted into the expression, and the keypad remains contained on narrow mobile screens."
+  },
+  {
+    "name": "Invalid scientific inputs show clear errors",
+    "viewport": "mobile",
+    "covers": [
+      "scientific input validation",
+      "domain errors",
+      "division-by-zero errors"
+    ],
+    "description": "Verifies invalid domains and division by zero show a visible explanation instead of a blank result.",
+    "steps": [
+      "Enter sqrt(-1) and calculate",
+      "Enter log10(0) and calculate",
+      "Enter 5/0 and calculate"
+    ],
+    "expected": "Each invalid expression displays a clear domain or division error and does not save a false result."
+  },
+  {
+    "name": "Calculator and monetization remain non-disruptive",
+    "viewport": "desktop",
+    "covers": [
+      "basic arithmetic regression",
+      "symbolic mathematics regression",
+      "optional symbolic result history saving",
+      "symbolic worked steps persist in history",
+      "history storage bounded for browser quota",
+      "non-intrusive ad slot placement",
+      "no fake full-screen timed ad",
+      "advertising readiness state is transparent",
+      "professional mathematical center coming-soon state"
+    ],
+    "description": "Checks core calculations, local symbolic history, bounded history retention, and the honest non-blocking ad placeholder before an advertising provider is connected.",
+    "steps": [
+      "Calculate 48/6*(7+5)-3^2 and confirm 87",
+      "Open Functions > Symbolic Mathematics and simplify 3*x^2+5*x-2*x^2+7*x-4",
+      "Save the symbolic result to history and verify its steps can be reopened",
+      "Return to the calculator and confirm the small placement reads Sponsored and Ad space reserved · Ads not enabled yet",
+      "Leave the calculator idle and verify no full-screen advertisement dialog appears",
+      "Refresh and confirm recent history remains available",
+      "Open Functions and confirm Professional Mathematical Center remains labeled Coming Soon until access and payment handling are implemented"
+    ],
+    "expected": "Arithmetic returns 87; symbolic algebra produces x^2+12*x-4 and its saved working persists; recent history is bounded to 200 entries; ad readiness is shown in a small non-blocking placeholder with no fake timer, no pretend ads, and no interruption to calculations."
+  }
+]
