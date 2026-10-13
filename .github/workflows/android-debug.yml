@@ -1,19 +1,13 @@
 
-name: Android Debug Build
+name: Prime Calculator Android Debug Build
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
-      - "package.json"
-      - "package-lock.json"
-      - "capacitor.config.ts"
-      - "src/**"
-      - "public/**"
-      - "App.tsx"
-      - "index.ts"
-      - "main.tsx"
+      - "prime-calculator-android (1).zip"
       - ".github/workflows/android-debug.yml"
 
 permissions:
@@ -22,6 +16,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,7 +25,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          
+
+      - name: Extract complete project
+        run: |
+          unzip -q "prime-calculator-android (1).zip" -d /tmp/prime-source
+          SOURCE="/tmp/prime-source/prime-calculator-capacitor-prep (1)"
+          test -f "$SOURCE/src/main.tsx"
+          test -f "$SOURCE/package.json"
+          cp -a "$SOURCE/backend" "$SOURCE/public" "$SOURCE/src" .
+          cp "$SOURCE/package.json" "$SOURCE/index.html" .
+          cp "$SOURCE/capacitor.config.ts" "$SOURCE/postcss.config.js" .
+          cp "$SOURCE/tailwind.config.js" "$SOURCE/tsconfig.json" .
+          cp "$SOURCE/vite.config.ts" .
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -39,12 +45,12 @@ jobs:
           java-version: "17"
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: Build web app
         run: npm run build
 
-      - name: Prepare Capacitor Android project
+      - name: Prepare Android platform
         run: |
           if [ ! -d android ]; then
             npx cap add android
@@ -52,12 +58,12 @@ jobs:
           npx cap sync android
 
       - name: Build debug APK
+        working-directory: android
         run: |
-          cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload APK artifact
+      - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: prime-calculator-debug-apk
